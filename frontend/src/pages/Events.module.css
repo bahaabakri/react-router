@@ -1,0 +1,14 @@
+ul.list {
+    list-style: disc;
+    width: 500px;
+    margin: auto;
+}
+
+.element {
+    display: flex;
+    justify-content: space-between;
+}
+.element .title a {
+    text-decoration: none !important;
+    color: white;
+}
