@@ -24,8 +24,9 @@
 import {createBrowserRouter, Outlet, RouterProvider} from 'react-router-dom'
 import Home from './pages/Home'
 import EventsPage, {eventsLoader} from './pages/Events'
-import EventDetails, {eventDetailsLoader} from './pages/EventDetails';
+import EventDetails, {eventDetailsLoader, deleteEventAction} from './pages/EventDetails';
 import NewEvent from './pages/NewEvent';
+import {addEditEventAction} from './components/EventForm'
 import EditEvent from './pages/EditEvent';
 import MainLayout from './Layout/MainLayout'
 import ErrorPage from './Layout/ErrorPage'
@@ -57,16 +58,19 @@ function App() {
               children: [
                 {
                   index: true,
+                  action: deleteEventAction,
                   element: <EventDetails />,
                 },
                 {
                   path: 'edit',
-                  element: <EditEvent />
+                  action: addEditEventAction,
+                  element: <EditEvent />,
                 }
               ]
             },
             {
               path: 'new',
+              action: addEditEventAction,
               element: <NewEvent/>
             }
           ]

@@ -8,11 +8,11 @@ const ErrorPage = () => {
     let message, title
     message = 'Something went wrong'
     title = 'An error occured'
-    if(error.status.toString().startsWith('5')) {
+    if(error?.status?.toString().startsWith('5')) {
         // message = error?.message ?? 'Something went wrong'
         message = error.data.message
     }
-    if (error.status == 404) {
+    if (error.status === 404) {
             message = 'Sorry, we could not reach this page, maybe this page has been deleted or moved'
             title = 'Page Not Found'
     }

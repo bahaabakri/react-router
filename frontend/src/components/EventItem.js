@@ -1,9 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigation, useSubmit } from 'react-router-dom';
 import classes from './EventItem.module.css';
 
 function EventItem({ event }) {
-  function startDeleteHandler() {
-    // ...
+  const submit = useSubmit()
+  const navigation = useNavigation()
+  const isSubmitting = navigation.state === 'submitting' ? true : false
+  function startDeleteHandler(e) {
+    if (e) {
+      e.preventDefault()
+    }
+    const confirmDelete = window.confirm("Are u sure want to delete this event?")
+    if(confirmDelete) {
+      // delete event
+      submit(null, {
+        method: 'DELETE'
+      })
+    }
   }
 
   return (
@@ -14,7 +26,12 @@ function EventItem({ event }) {
       <p>{event.description}</p>
       <menu className={classes.actions}>
         <Link to='edit'>Edit</Link>
-        <button onClick={startDeleteHandler}>Delete</button>
+        <button 
+          disabled={isSubmitting}
+          onClick={startDeleteHandler} 
+          onSubmit={(e) => startDeleteHandler}>
+          {isSubmitting ? 'Deleting ...' : 'Delete'}
+        </button>
       </menu>
     </article>
   );

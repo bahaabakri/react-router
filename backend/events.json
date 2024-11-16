@@ -1,11 +1,1 @@
-{
-  "events": [
-    {
-      "id": "e1",
-      "title": "A dummy event",
-      "date": "2023-02-22",
-      "image": "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
-      "description": "Join this amazing event and connect with fellow developers."
-    }
-  ]
-}
+{"events":[{"title":"Voluptatem illum te","description":"Minim sint ut suscip","date":"2024-11-25","image":"https://picsum.photos/200/300?grayscale","id":"551b294c-f283-4eb5-9c58-3afc602b7a40"},{"title":"A dummy event$$","description":"Join this amazing event and connect with fellow developers.","date":"2023-02-22","image":"https://picsum.photos/id/237/200/300","id":"e1"}]}

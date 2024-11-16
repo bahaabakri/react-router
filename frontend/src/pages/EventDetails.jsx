@@ -1,10 +1,8 @@
-import {useParams } from "react-router"
+import {redirect } from "react-router"
 import EventItem from '../components/EventItem'
-import { Link, json, useRouteLoaderData } from 'react-router-dom'
+import { json, useRouteLoaderData } from 'react-router-dom'
 const EventDetails = () => {
-    const params = useParams()
     const data = useRouteLoaderData('event-details')
-    const id = params.id
     return (
             <EventItem event={data.event}></EventItem>
     )
@@ -18,6 +16,19 @@ export async function eventDetailsLoader({request, params}) {
         throw json({message: 'Faild to load data'}, {status: 500})
     } else {
         return response
+    }
+
+}
+
+export async function deleteEventAction({request, params}) {
+    const eventId = params.eventId
+    const response = await fetch(`http://localhost:8080/events/${eventId}`, {
+        method: request.method
+    })
+    if(!response.ok) {
+        throw json({message: 'Faild to load data'}, {status: 500})
+    } else {
+       return redirect('/events')
     }
 
 }
