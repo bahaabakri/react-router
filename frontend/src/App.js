@@ -31,6 +31,7 @@ import EditEvent from './pages/EditEvent';
 import MainLayout from './Layout/MainLayout'
 import ErrorPage from './Layout/ErrorPage'
 import EventLayout from './Layout/EventLayout'
+import NewsletterPage, {action as newsletterAction} from './pages/Newsletter'
 function App() {
   const router = createBrowserRouter([
     {
@@ -74,7 +75,12 @@ function App() {
               element: <NewEvent/>
             }
           ]
-        }
+        },
+        {
+          path: 'newsletter',
+          element: <NewsletterPage />,
+          action: newsletterAction,
+        },
       ]
     }
   ])
