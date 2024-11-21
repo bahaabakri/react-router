@@ -1,23 +1,48 @@
-import {redirect } from "react-router"
+import {defer, redirect, Await } from "react-router"
 import EventItem from '../components/EventItem'
 import { json, useRouteLoaderData } from 'react-router-dom'
+import {eventsLoaderFetch} from './Events'
+import { Suspense } from "react"
+import EventsList from "../components/EventsList"
 const EventDetails = () => {
-    const data = useRouteLoaderData('event-details')
+    const {event, events} = useRouteLoaderData('event-details')
     return (
-            <EventItem event={data.event}></EventItem>
+        <>
+            <Suspense fallback={<p style={{textAlign: 'center'}}>Loading ...</p>}>
+                <Await resolve={event}>
+                    {(loadedEvent) => <EventItem event={loadedEvent}></EventItem>}
+                </Await>
+            </Suspense>
+
+            <Suspense fallback={<p style={{textAlign: 'center'}}>Loading ...</p>}>
+                <Await resolve={events}>
+                    {(loadedEvents) => <EventsList events={loadedEvents} />}
+                </Await>
+            </Suspense>
+        </>
+            
     )
 }
 export default EventDetails
 
-export async function eventDetailsLoader({request, params}) {
-    const eventId = params.eventId
+export async function eventDetailsLoaderFetch(eventId) {
+    // const eventId = params.eventId
     const response = await fetch(`http://localhost:8080/events/${eventId}`)
     if(!response.ok) {
         throw json({message: 'Faild to load data'}, {status: 500})
     } else {
-        return response
+        const responseData = await response.json()
+        return responseData.event
     }
 
+}
+
+export async function eventDetailsLoader({request, params}) {
+    const eventId = params.eventId
+    return defer({
+        events: eventsLoaderFetch(),
+        event: await eventDetailsLoaderFetch(eventId) // defer wait until load the event details
+    })
 }
 
 export async function deleteEventAction({request, params}) {
